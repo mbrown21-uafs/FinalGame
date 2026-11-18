@@ -1,26 +1,71 @@
 package game;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
+/*
+ * Holds the player's health and defensive block.
+ */
 public class Player {
 
-	
-	private int x = 420;
-	private int y = 350;
-	
-	public void draw(Graphics g) {
-		
-		Color skin = new Color(230,180,135);
-		Color hair = new Color(75,45,25);
-		Color shirt = new Color(45,110,55);
-		Color pants = new Color(65,45,35);
-		Color backpack = new Color(125,75,40);
-		Color sword = new Color(190,195,200);
-		
-		
-		
-		
-	}
-	
+    private int health;
+    private int maxHealth;
+    private int block;
+
+    public Player() {
+        maxHealth = 70;
+        health = 70;
+        block = 0;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getBlock() {
+        return block;
+    }
+
+    public void gainBlock(int amount) {
+
+        if (amount > 0) {
+            block += amount;
+        }
+    }
+
+    public void takeDamage(int damage) {
+
+        if (damage <= block) {
+            block -= damage;
+            damage = 0;
+
+        } else {
+            damage -= block;
+            block = 0;
+        }
+
+        health -= damage;
+
+        if (health < 0) {
+            health = 0;
+        }
+    }
+
+    public void heal(int amount) {
+
+        health += amount;
+
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+
+    public void resetBlock() {
+        block = 0;
+    }
+
+    public boolean isDefeated() {
+        return health <= 0;
+    }
 }
